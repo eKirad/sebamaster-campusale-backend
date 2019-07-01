@@ -37,16 +37,14 @@ module.exports = {
                             token: null
                         })
                 }
-
+                
                 // User found & password is valid --> create a token
                 const token = jwt.sign({
                     id: user._id,
                     username: user.username
-                }, config.jwtSecret, {
+                }, config.developement.jwtSecret, {
                     expiresIn: 86400 
                 });
-
-                console.log(`token = ${token}`)
 
                 res.status(200).json({ token: token });
             })
@@ -75,8 +73,6 @@ module.exports = {
             password: bcrypt.hashSync(req.body.password, 8)
         }
         
-        console.log(user);
-
         User.create(user)
             .then((user) => {
                 // If user is registered without errors --> create a token for that user
