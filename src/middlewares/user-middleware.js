@@ -4,7 +4,9 @@ const config = require('../config/config');
 
 const checkAuthentication = (req, res, next) => {
     let token = ``;
+    // console.log(req.headers)
     if (req.headers.authorization) {
+        console.log(`yes`)
         token = req.headers.authorization.substring(4);
     }
 

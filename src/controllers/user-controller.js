@@ -53,6 +53,12 @@ module.exports = {
                 message: error.message
             }));
     },
+
+    logout: (req, res) => {
+        res.status(200).send({ token: null });
+    },
+
+
     signup: (req, res) => {
         if (!Object.prototype.hasOwnProperty.call(req.body, 'password')){
             return res.status(400).json({
@@ -67,10 +73,18 @@ module.exports = {
                 message: 'The request body must contain a username property'
             });
         }
+
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'email')) {
+            return res.status(400).json({
+                error: 'Bad Request',
+                message: 'The request body must contain an email property'
+            });
+        }
     
         const user = {
             username: req.body.username,
-            password: bcrypt.hashSync(req.body.password, 8)
+            password: bcrypt.hashSync(req.body.password, 8),
+            email: req.body.email
         }
         
         User.create(user)
@@ -78,7 +92,7 @@ module.exports = {
                 // If user is registered without errors --> create a token for that user
                 const token = jwt.sign({
                     id: user._id,
-                    username: user.username
+                    username: user.username,
                 }, config.developement.jwtSecret, {
                     expiresIn: 86400
                 });
@@ -98,5 +112,17 @@ module.exports = {
                     });
                 }
             });
+    },
+
+    getUser: (req, res) => {
+        User
+            .findById(req.params.id)
+            .then((user) => {
+                res.status(200).json(user)
+            })
     }
+
+
+
+
 }

@@ -5,7 +5,6 @@ module.exports = {
         Category
             .find({ })
             .then((categories) => {
-                categories.forEach(item => console.log(item.itemName));
                 res.status(200).json(categories);
             })
     }
