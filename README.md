@@ -1,5 +1,5 @@
 # sebamaster-campusale-backend
-The backend of the campuSale project, part of the sebis chair's Web Application Engineering coure @TU-Munich
+The backend of the campuSale project, part of the sebis chair's Web Application Engineering coure @TU-Munich. The frontend app can be found [here](https://github.com/eKirad/sebamaster-campusale-frontend)
 
 # Prerequisites
 * node.js & npm (node package manager)
