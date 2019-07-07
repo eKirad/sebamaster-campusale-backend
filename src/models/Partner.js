@@ -5,4 +5,4 @@ const partnerSchema = new mongoose.Schema({
     location: {type: String}
 });
 
-module.export = mongoose.model('Partner', partnerSchema);
+module.exports = mongoose.model('Partner', partnerSchema);

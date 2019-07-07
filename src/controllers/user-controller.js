@@ -38,10 +38,14 @@ module.exports = {
                         })
                 }
                 
+
+                console.log(`VALID USER`)
+                console.log(user)
                 // User found & password is valid --> create a token
                 const token = jwt.sign({
                     id: user._id,
-                    username: user.username
+                    username: user.username,
+                    role: user.role
                 }, config.developement.jwtSecret, {
                     expiresIn: 86400 
                 });
@@ -84,7 +88,8 @@ module.exports = {
         const user = {
             username: req.body.username,
             password: bcrypt.hashSync(req.body.password, 8),
-            email: req.body.email
+            email: req.body.email,
+            role: req.body.role
         }
         
         User.create(user)
@@ -93,6 +98,7 @@ module.exports = {
                 const token = jwt.sign({
                     id: user._id,
                     username: user.username,
+                    role: user.role
                 }, config.developement.jwtSecret, {
                     expiresIn: 86400
                 });
