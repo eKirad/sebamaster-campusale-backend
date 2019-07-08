@@ -24,5 +24,9 @@ module.exports = {
                 const slicedApprovedPartners = approvedPartners.slice(0, 5);
                 res.status(200).json(slicedApprovedPartners)
             });
-    }
+    },
+    // deletePartner: (req, res) => {
+    //     Partner
+    //         .findByIdAndRemove()
+    // }
 }
