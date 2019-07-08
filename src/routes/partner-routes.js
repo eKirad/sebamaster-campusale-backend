@@ -7,4 +7,9 @@ module.exports = (app, api) => {
         middleware.checkAdminRole,
         partnerController.getAllPartners);
     app.get(`${api}/approved-partners`, partnerController.getApprovedPartners);
+    app.delete(`${api}/partner/:id`,
+        middleware.checkAuthentication,
+        middleware.checkAdminRole,
+        partnerController.deletePartner
+    )
 }

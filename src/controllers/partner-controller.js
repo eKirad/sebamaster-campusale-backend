@@ -25,8 +25,15 @@ module.exports = {
                 res.status(200).json(slicedApprovedPartners)
             });
     },
-    // deletePartner: (req, res) => {
-    //     Partner
-    //         .findByIdAndRemove()
-    // }
+    deletePartner: (req, res) => {
+        Partner
+            .findByIdAndRemove(req.params.id)
+            .then(() => res.status(200).json({
+                message: `Partner with id = ${req.params.id} was deleted.`
+            }))
+            .catch(error => res.status(500).json({
+                error: `Internal server error`,
+                message: error.message
+            }));
+    }
 }

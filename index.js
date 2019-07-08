@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-
 // Call category routes
 require('./src/routes/category-routes') (app, api);
 // Call item routes

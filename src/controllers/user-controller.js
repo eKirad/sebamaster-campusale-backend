@@ -5,7 +5,6 @@ const User = require('../models/User');
 
 module.exports = {
     login: (req, res) => {
-        console.log(req.body);
         if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) {
             return res.status(400)
                 .json({
@@ -27,9 +26,6 @@ module.exports = {
             .exec()
             .then(user => {
                 // Check if the password is valid
-                console.log(`user.name = ${user.password}, req.body.password = ${req.body.password}`)
-                const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
-                console.log(isPasswordValid);
                 if (!isPasswordValid) {
                     console.log('no, it is not valid')
                     return res.status(401)
@@ -37,10 +33,7 @@ module.exports = {
                             token: null
                         })
                 }
-                
 
-                console.log(`VALID USER`)
-                console.log(user)
                 // User found & password is valid --> create a token
                 const token = jwt.sign({
                     id: user._id,
@@ -57,12 +50,9 @@ module.exports = {
                 message: error.message
             }));
     },
-
     logout: (req, res) => {
         res.status(200).send({ token: null });
     },
-
-
     signup: (req, res) => {
         if (!Object.prototype.hasOwnProperty.call(req.body, 'password')){
             return res.status(400).json({
@@ -119,7 +109,6 @@ module.exports = {
                 }
             });
     },
-
     getUser: (req, res) => {
         User
             .findById(req.params.id)

@@ -1,18 +1,13 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
-const bcrypt = require('bcrypt');
 
 const checkAuthentication = (req, res, next) => {
-    console.log(`This is the request inside checkAuthenticationb`);
-    console.log(req.headers)
-    
     let token = ``;
     if (req.headers.authorization) {
         token = req.headers.authorization.substring(4);
     }
 
     if (!token) {
-        console.log(`No token`)
         return res.status(401)
             .send({
                 error: `Unauthorized`,
@@ -43,21 +38,17 @@ const errorHandler = (err, req, res, next) => {
 };
 
 const checkAdminRole = (req, res, next) => {
-    console.log(`inside CHeckAdminRole`);
-    console.log(req);
-    console.log(`AFTER`);
     const token = req.headers.authorization
         .split(' ');
-    const myObj = jwt.decode(token[1]);
-    console.log(myObj)
-    if (myObj.role !== `admin`) {
+    const userObj = jwt.decode(token[1]);
+
+    if (userObj.role !== `admin`) {
         return res.status(401)
             .send({
                 error: `Unauthorized`,
                 message: `Permission denied. No admin rights`
             })
     } else {
-        console.log(`yes, move on`)
         next();
     }
 }
