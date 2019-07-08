@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
-
+const bcrypt = require('bcrypt');
 
 const checkAuthentication = (req, res, next) => {
     console.log(`This is the request inside checkAuthenticationb`);
@@ -44,8 +44,13 @@ const errorHandler = (err, req, res, next) => {
 
 const checkAdminRole = (req, res, next) => {
     console.log(`inside CHeckAdminRole`);
-    console.log(req.params);
-    if (req.params.role !== `admin`) {
+    console.log(req);
+    console.log(`AFTER`);
+    const token = req.headers.authorization
+        .split(' ');
+    const myObj = jwt.decode(token[1]);
+    console.log(myObj)
+    if (myObj.role !== `admin`) {
         return res.status(401)
             .send({
                 error: `Unauthorized`,
