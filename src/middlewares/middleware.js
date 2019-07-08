@@ -3,14 +3,16 @@ const config = require('../config/config');
 
 
 const checkAuthentication = (req, res, next) => {
+    console.log(`This is the request inside checkAuthenticationb`);
+    console.log(req.headers)
+    
     let token = ``;
-    // console.log(req.headers)
     if (req.headers.authorization) {
-        console.log(`yes`)
         token = req.headers.authorization.substring(4);
     }
 
     if (!token) {
+        console.log(`No token`)
         return res.status(401)
             .send({
                 error: `Unauthorized`,
@@ -18,7 +20,7 @@ const checkAuthentication = (req, res, next) => {
             })
     }
 
-    jwt.verify(token, config.jwtSecret, (err, decoded) => {
+    jwt.verify(token, config.developement.jwtSecret, (err, decoded) => {
         if (err) {
             return res.status(401)
                 .send({
@@ -40,7 +42,23 @@ const errorHandler = (err, req, res, next) => {
     res.render('error', { error: err })
 };
 
+const checkAdminRole = (req, res, next) => {
+    console.log(`inside CHeckAdminRole`);
+    console.log(req.params);
+    if (req.params.role !== `admin`) {
+        return res.status(401)
+            .send({
+                error: `Unauthorized`,
+                message: `Permission denied. No admin rights`
+            })
+    } else {
+        console.log(`yes, move on`)
+        next();
+    }
+}
+
 module.exports = {
     checkAuthentication,
+    checkAdminRole,
     errorHandler
 }

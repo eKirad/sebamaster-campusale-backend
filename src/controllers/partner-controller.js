@@ -9,8 +9,20 @@ module.exports = {
                 // slicing randomly the first five partners. In the future the filter has to be
                 // changed and applied according to other preferences (only partners willing to invest
                 // more funds will be shown)
-                const slicedPartners = partners.slice(0, 5);
-                res.status(200).json(slicedPartners)
+                // const slicedPartners = partners.slice(0, 5);
+                res.status(200).json(partners)
+            });
+    },
+    getApprovedPartners: (req, res) => {
+        Partner
+            .find({ isApproved: true })
+            .then(approvedPartners => {
+                // Filter and send to the client only a couple of partners. Currently
+                // slicing randomly the first five partners. In the future the filter has to be
+                // changed and applied according to other preferences (only partners willing to invest
+                // more funds will be shown)
+                const slicedApprovedPartners = approvedPartners.slice(0, 5);
+                res.status(200).json(slicedApprovedPartners)
             });
     }
 }
