@@ -1,6 +1,6 @@
 const express = require('express');
 const userController = require('../controllers/user-controller');
-const userMiddleware = require('../middlewares/user-middleware');
+const userMiddleware = require('../middlewares/middleware');
 
 module.exports = (app, api)  => {
     app.get(`${api}/user/:id`, userController.getUser);
