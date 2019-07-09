@@ -5,4 +5,5 @@ const itemController = require('../controllers/item-controller');
 module.exports = (app, api) => {
     app.get(`${api}/items`, itemController.getAllItems);
     app.get(`${api}/item/:id`, itemController.getItem);
+    app.post(`${api}/item`, itemController.addItem);
 }

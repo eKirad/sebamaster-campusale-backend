@@ -42,7 +42,7 @@ module.exports = {
                 const token = jwt.sign({
                     id: user._id,
                     username: user.username,
-                    role: user.role
+                    role: user.role,
                 }, config.developement.jwtSecret, {
                     expiresIn: 86400 
                 });
