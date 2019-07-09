@@ -7,6 +7,6 @@ module.exports = (app, api)  => {
     app.post(`${api}/login`, userController.login);
     app.post(`${api}/signup`, userController.signup);
     app.post(`${api}/logout`, middleware.checkAuthentication, userController.logout);
-    // Create a route and therefor a method inside user-controller to signup a partner user
+    // Create a route and therefore a method inside user-controller to signup a partner user
     // without creating a token for him/her
 }

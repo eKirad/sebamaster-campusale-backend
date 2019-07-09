@@ -3,7 +3,10 @@ const middleware = require('../middlewares/middleware');
 
 module.exports = (app, api) => {
     app.post(`${api}/become-partner`, partnerController.createPartner);
+    
+    // Needs authorization middleware, only admin should be able to update partner
     app.put(`${api}/partner`, partnerController.updatePartner);
+    
     app.get(`${api}/partners`, 
         middleware.checkAuthentication,
         middleware.checkAdminRole,
