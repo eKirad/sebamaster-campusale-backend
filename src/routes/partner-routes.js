@@ -2,6 +2,8 @@ const partnerController = require('../controllers/partner-controller');
 const middleware = require('../middlewares/middleware');
 
 module.exports = (app, api) => {
+    app.post(`${api}/become-partner`, partnerController.createPartner);
+    app.put(`${api}/partner`, partnerController.updatePartner);
     app.get(`${api}/partners`, 
         middleware.checkAuthentication,
         middleware.checkAdminRole,

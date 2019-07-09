@@ -35,5 +35,43 @@ module.exports = {
                 error: `Internal server error`,
                 message: error.message
             }));
+    },
+    createPartner: (req, res) => {
+        if (Object.keys(req.body).length === 0) {
+            return res.status(200).json({
+                error: `Bad request`,
+                message: `The request body is empty`
+            })
+        }
+
+        console.log(req.body)
+
+        Partner
+            .create(req.body)
+            .then(partner => res.status(201).json(partner))
+            .catch(error => res.status(500).json({
+                error: `Internal server error`,
+                message: error.message
+            }));
+    },
+    updatePartner: (req, res) => {
+        if (Object.keys(req.body).length === 0) {
+            return res.status(400).json({
+                error: 'Bad Request',
+                message: 'The request body is empty'
+            });
+        }
+
+        console.log(`Inside updatePartner()`);
+        console.log(req.body);
+        Partner
+            .findByIdAndUpdate(req.body.id, {
+                isApproved: true
+            })
+            .then(movie => res.status(200).json(movie))
+            .catch(error => res.status(500).json({
+                error: 'Internal server error',
+                message: error.message
+            }));
     }
 }
