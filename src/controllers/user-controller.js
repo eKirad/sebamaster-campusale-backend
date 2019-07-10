@@ -118,6 +118,34 @@ module.exports = {
                 }
             });
     },
+    signupPartnerUser: (req, res) => {
+        const user = {
+            username: req.body.username,
+            password: bcrypt.hashSync(req.body.password, 8),
+            email: req.body.email,
+            role: req.body.role,
+            partnerId: req.body.partnerId
+        }
+        
+        User.create(user)
+            .then((user) => {
+                // Register the user.
+                res.status(200).json({ user })
+            })
+            .catch((error) => {
+                if (error.code === 11000) {
+                    res.status(400).json({
+                        error: 'User exists',
+                        message: error.message
+                    })
+                } else {
+                    res.status(500).json({
+                        error: 'Internal server error',
+                        message: error.message
+                    });
+                }
+            });
+    },
     getUser: (req, res) => {
         User
             .findById(req.params.id)

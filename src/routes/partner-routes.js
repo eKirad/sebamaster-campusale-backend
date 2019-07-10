@@ -2,10 +2,14 @@ const partnerController = require('../controllers/partner-controller');
 const middleware = require('../middlewares/middleware');
 
 module.exports = (app, api) => {
+    // Creates a partner with a `isApproved` flag set to false
     app.post(`${api}/become-partner`, partnerController.createPartner);
     
-    // Needs authorization middleware, only admin should be able to update partner
-    app.put(`${api}/partner`, partnerController.updatePartner);
+    // Update/approve a specific partner
+    app.put(`${api}/partner`, 
+        middleware.checkAuthentication,
+        middleware.checkAdminRole,    
+        partnerController.updatePartner);
     
     app.get(`${api}/partners`, 
         middleware.checkAuthentication,
