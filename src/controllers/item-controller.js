@@ -20,7 +20,9 @@ module.exports = {
     addItem: (req, res) => {
         Item
             .create(req.body)
-            .then((newItem) => res.status(200).json(newItem))
+            .then((newItem) => {
+                console.log(newItem)
+                return res.status(200).json(newItem)})
             .catch((error) => {
                 if (error.code === 11000) {
                     res.status(400).json({
@@ -36,6 +38,4 @@ module.exports = {
             });
     }
 }
-
-
 

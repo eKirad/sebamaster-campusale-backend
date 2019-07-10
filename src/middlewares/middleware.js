@@ -53,8 +53,26 @@ const checkAdminRole = (req, res, next) => {
     }
 }
 
+const checkPartnerOrAdminRole = (req, res, next) => {
+    const token = req.headers.authorization
+        .split(' ');
+    const userObj = jwt.decode(token[1]);
+
+    if (userObj.role !== `admin` && userObj.role !== `partner`) {
+        return res.status(401)
+            .send({
+                error: `Unauthorized`,
+                message: `Permission denied. No admin rights`
+            })
+    } else {
+        console.log(`yes, move on`)
+        next();
+    }
+}
+
 module.exports = {
     checkAuthentication,
     checkAdminRole,
+    checkPartnerOrAdminRole,
     errorHandler
 }

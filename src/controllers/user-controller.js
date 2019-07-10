@@ -5,9 +5,6 @@ const User = require('../models/User');
 
 module.exports = {
     login: (req, res) => {
-        console.log(`Inside login`);
-        console.log(req.body)
-        
         if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) {
             return res.status(400)
                 .json({
@@ -43,6 +40,7 @@ module.exports = {
                     id: user._id,
                     username: user.username,
                     role: user.role,
+                    partnerId: user.partnerId
                 }, config.developement.jwtSecret, {
                     expiresIn: 86400 
                 });
@@ -145,6 +143,9 @@ module.exports = {
                     });
                 }
             });
+    },
+    deletePartnerUser: (req, res) => {
+
     },
     getUser: (req, res) => {
         User
