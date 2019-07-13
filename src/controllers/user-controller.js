@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const config = require('../config/config');
 const User = require('../models/User');
+const Wishlist = require('../models/Wishlist');
 
 module.exports = {
     login: (req, res) => {
@@ -28,7 +29,6 @@ module.exports = {
                 const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
                 // Check if the password is valid
                 if (!isPasswordValid) {
-                    console.log('no, it is not valid')
                     return res.status(401)
                         .send({
                             token: null
@@ -56,9 +56,6 @@ module.exports = {
         res.status(200).send({ token: null });
     },
     signup: (req, res) => {
-        console.log(`SIGNUP`);
-        console.log(req.body)
-        
         if (!Object.prototype.hasOwnProperty.call(req.body, 'password')){
             return res.status(400).json({
                 error: 'Bad Request',

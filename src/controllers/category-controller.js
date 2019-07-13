@@ -7,5 +7,24 @@ module.exports = {
             .then((categories) => {
                 res.status(200).json(categories);
             })
+    },
+    addCategory: (req, res) => {
+        Category
+            .create(req.body)
+            .then((newCategory) => {
+                return res.status(200).json(newCategory)})
+            .catch((error) => {
+                if (error.code === 11000) {
+                    res.status(400).json({
+                        error: 'Category exists',
+                        message: error.message
+                    })
+                } else {
+                    res.status(500).json({
+                        error: 'Internal server error',
+                        message: error.message
+                    });
+                }
+            });
     }
 }

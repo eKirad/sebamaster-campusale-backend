@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
+const userService = require('../services/userService');
 
 const checkAuthentication = (req, res, next) => {
     let token = ``;
@@ -38,9 +39,8 @@ const errorHandler = (err, req, res, next) => {
 };
 
 const checkAdminRole = (req, res, next) => {
-    const token = req.headers.authorization
-        .split(' ');
-    const userObj = jwt.decode(token[1]);
+
+    const userObj = userService.getUser(req.headers.authorization);
 
     if (userObj.role !== `admin`) {
         return res.status(401)
@@ -54,9 +54,7 @@ const checkAdminRole = (req, res, next) => {
 }
 
 const checkPartnerOrAdminRole = (req, res, next) => {
-    const token = req.headers.authorization
-        .split(' ');
-    const userObj = jwt.decode(token[1]);
+    const userObj = userService.getUser(req.headers.authorization);
 
     if (userObj.role !== `admin` && userObj.role !== `partner`) {
         return res.status(401)
@@ -65,7 +63,6 @@ const checkPartnerOrAdminRole = (req, res, next) => {
                 message: `Permission denied. No admin rights`
             })
     } else {
-        console.log(`yes, move on`)
         next();
     }
 }

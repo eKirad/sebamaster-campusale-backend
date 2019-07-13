@@ -1,8 +1,9 @@
 const wishlistController = require('../controllers/wishlist-controller');
-const userMiddleware = require('../middlewares/user-middleware');
+const middleware = require('../middlewares/middleware');
 
 module.exports = (app, api) => {
-    // TODO
-    app.get(`${api}/wishlist/:id`, userMiddleware.checkAuthentication, wishlistController.getWishlist);
+    app.get(`${api}/wishlist/get`, middleware.checkAuthentication, wishlistController.getWishlist);
+    app.post(`${api}/wishlist/add`, middleware.checkAuthentication, wishlistController.addItemToWishlist);
+    app.delete(`${api}/wishlist/delete`, middleware.checkAuthentication, wishlistController.removeItemFromWishlist);
 }
 
