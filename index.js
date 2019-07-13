@@ -16,16 +16,16 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-
 // Call category routes
 require('./src/routes/category-routes') (app, api);
 // Call item routes
 require('./src/routes/item-routes') (app, api);
+// Call partner routes
+require('./src/routes/partner-routes') (app, api);
 // Call user routes
 require('./src/routes/user-routes') (app, api);
-
-
-
+// Call wishlist routes
+require('./src/routes/wishlist-routes') (app, api);
 
 app.listen(config.port, () => console.log(`Listening on port ${config.port}...`));
 
