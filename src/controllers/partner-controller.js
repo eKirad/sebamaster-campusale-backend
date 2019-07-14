@@ -44,10 +44,17 @@ module.exports = {
             })
         }
 
-        console.log(req.body)
+        const partnerObj = {
+            name: req.body.name,
+            isApproved: false,
+            contactPersonFirstName: req.body.contactPersonFirstName,
+            contactPersonSurname: req.body.contactPersonSurname,
+            contactPersonEmail: req.body.contactPersonEmail,
+            location: req.body.location
+        }
 
         Partner
-            .create(req.body)
+            .create(partnerObj)
             .then(partner => res.status(201).json(partner))
             .catch(error => res.status(500).json({
                 error: `Internal server error`,
