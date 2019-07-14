@@ -1,5 +1,5 @@
-const port = process.env.PORT || 8000;
-const dbURI = process.env.DB_URI || `mongodb://localhost:27017/campusaledb`;
+const port = process.env.PORT;
+const dbURI = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@ds054298.mlab.com:54298/campusale`;
 const jwtSecret = process.env.JWT_SECRET || `very secret secret`;
 
 module.exports = {
