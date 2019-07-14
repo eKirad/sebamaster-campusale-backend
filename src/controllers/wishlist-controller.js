@@ -8,14 +8,14 @@ module.exports = {
             if (req.query.itemId) {
                 // Checking if a specific item exists in the user's wishlist
                 Wishlist
-                    .find({userId: user.id, itemId: req.query.itemId})
+                    .find({user: user.id, item: req.query.itemId})
                     .then((wishlist) => {
                         res.status(200).json(wishlist);
                     })
             } else {
                 // Listing all of the user's wishlist
                 Wishlist
-                    .find({userId: user.id})
+                    .find({user: user.id}).populate('item')
                     .then((wishlist) => {
                         res.status(200).json(wishlist);
                     })
@@ -30,31 +30,38 @@ module.exports = {
     addItemToWishlist: (req, res) => {
         const user = userService.getUser(req.headers.authorization);
         const wishlistItem = {
-            userId: user.id,
-            itemId: req.body.itemId,
+            user: user.id,
+            item: req.body.itemId,
         };
-        Wishlist
-            .create(wishlistItem)
-            .then((newItem) => {
-                return res.status(200).json(newItem)
+        if (user.role === "student") {
+            Wishlist
+                .create(wishlistItem)
+                .then((newItem) => {
+                    return res.status(200).json(newItem)
+                })
+                .catch((error) => {
+                    if (error.code === 11000) {
+                        res.status(400).json({
+                            error: 'Item exists',
+                            message: error.message
+                        })
+                    } else {
+                        res.status(500).json({
+                            error: 'Internal server error',
+                            message: error.message
+                        });
+                    }
+                });
+        }
+        else {
+            res.status(400).json({
+                message: 'Admins and partners don\'t have wishlists.'
             })
-            .catch((error) => {
-                if (error.code === 11000) {
-                    res.status(400).json({
-                        error: 'Item exists',
-                        message: error.message
-                    })
-                } else {
-                    res.status(500).json({
-                        error: 'Internal server error',
-                        message: error.message
-                    });
-                }
-            });
+        }
     },
     removeItemFromWishlist: (req, res) => {
         const user = userService.getUser(req.headers.authorization);
-        Wishlist.deleteOne({userId: user.id, itemId: req.query.itemId})
+        Wishlist.deleteOne({user: user.id, item: req.query.itemId})
             .then(() => res.status(200).json({
                 message: `Wishlist item with id = ${req.query.itemId} was deleted from the user ${user.id}.`
             }))
