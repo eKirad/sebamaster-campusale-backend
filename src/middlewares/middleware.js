@@ -7,7 +7,7 @@ const checkAuthentication = (req, res, next) => {
     if (req.headers.authorization) {
         token = req.headers.authorization.substring(4);
     }
-
+    
     if (!token) {
         return res.status(401)
             .send({
