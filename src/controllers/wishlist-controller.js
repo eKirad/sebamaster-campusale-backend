@@ -15,7 +15,13 @@ module.exports = {
             } else {
                 // Listing all of the user's wishlist
                 Wishlist
-                    .find({user: user.id}).populate('item')
+                    .find({user: user.id}).populate({
+                    path: 'item',
+                    populate: {
+                        path: 'discount',
+                        model: 'Discount'
+                    }
+                })
                     .then((wishlist) => {
                         res.status(200).json(wishlist);
                     })
