@@ -159,9 +159,6 @@ module.exports = {
             });
         }
 
-        console.log(`Inside updateUser()`);
-        console.log(req.body);
-        console.log(req.body.birthdate)
         User
             .findByIdAndUpdate(req.body._id, {
                 password: bcrypt.hashSync(req.body.password, 8),
@@ -171,7 +168,7 @@ module.exports = {
                 location: req.body.location,
                 dateOfBirth: req.body.birthdate
             })
-            .then(movie => res.status(200).json(movie))
+            .then(user => res.status(200).json(user))
             .catch(error => res.status(500).json({
                 error: 'Internal server error',
                 message: error.message

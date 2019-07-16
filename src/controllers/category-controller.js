@@ -26,5 +26,16 @@ module.exports = {
                     });
                 }
             });
+    },
+    deleteCategory: (req, res) => {
+        Category
+            .findByIdAndRemove(req.params.id)
+            .then(() => res.status(200).json({
+                message: `Category with id = ${req.params.id} was deleted.`
+            }))
+            .catch(error => res.status(500).json({
+                error: `Internal server error`,
+                message: error.message
+            }));
     }
 }
