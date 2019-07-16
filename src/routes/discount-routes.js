@@ -7,10 +7,14 @@ module.exports = (app, api) => {
         middleware.checkAuthentication, 
         middleware.isAdminOrPartner,
         discountController.addDiscount);
-    
     app.get(`${api}/discounts`, 
         middleware.checkAuthentication, 
         middleware.isAdminOrPartner,
         discountController.getDiscounts);
+
+    app.delete(`${api}/discounts/:id`, 
+        middleware.checkAuthentication, 
+        middleware.isAdminOrPartner,
+        discountController.deleteDiscount);
     
 }
