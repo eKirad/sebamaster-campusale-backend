@@ -5,12 +5,12 @@ const middleware = require('../middlewares/middleware');
 module.exports = (app, api) => {
     app.post(`${api}/discounts`, 
         middleware.checkAuthentication, 
-        middleware.checkPartnerOrAdminRole,
+        middleware.isAdminOrPartner,
         discountController.addDiscount);
     
     app.get(`${api}/discounts`, 
         middleware.checkAuthentication, 
-        middleware.checkPartnerOrAdminRole,
+        middleware.isAdminOrPartner,
         discountController.getDiscounts);
     
 }

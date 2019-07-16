@@ -11,17 +11,17 @@ module.exports = (app, api) => {
     // Update/set the discount of a specific item
     app.put(`${api}/items`, 
         middleware.checkAuthentication,
-        middleware.checkPartnerOrAdminRole,
+        middleware.isAdminOrPartner,
         itemController.updateItem);
 
     app.get(`${api}/partner-items`, 
         middleware.checkAuthentication,
-        middleware.checkPartnerOrAdminRole,
+        middleware.isAdminOrPartner,
         itemController.getPartnerItems);
 
     // Only users with role `partner` or `admin` should be able to add item
     app.post(`${api}/item`, 
         middleware.checkAuthentication, 
-        middleware.checkPartnerOrAdminRole,
+        middleware.isAdminOrPartner,
         itemController.addItem);
 }

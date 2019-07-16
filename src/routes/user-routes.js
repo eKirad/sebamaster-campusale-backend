@@ -8,13 +8,18 @@ module.exports = (app, api)  => {
     app.post(`${api}/signup`, userController.signup);
     app.post(`${api}/logout`, middleware.checkAuthentication, userController.logout);
 
+    // Update user
+    app.put(`${api}/users`, 
+        middleware.checkAuthentication, 
+        userController.updateUser);
+    
     // Routes that require admin authorization
     app.post(`${api}/signup-partner`, 
         middleware.checkAuthentication,
-        middleware.checkAdminRole,
+        middleware.isAdmin,
         userController.signupPartnerUser);
     app.delete(`${api}/delete-partner`,
         middleware.checkAuthentication,
-        middleware.checkAdminRole,
+        middleware.isAdmin,
         userController.deletePartnerUser)
 }
