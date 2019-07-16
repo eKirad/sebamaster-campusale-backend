@@ -46,5 +46,25 @@ module.exports = {
                 error: `Internal server error`,
                 message: error.message
             }));
+    },
+    updateDiscount: (req, res) => {
+        if (Object.keys(req.body).length === 0) {
+            return res.status(400).json({
+                error: 'Bad Request',
+                message: 'The request body is empty'
+            });
+        }
+
+        console.log(req.body)
+
+        // Discount
+        //     .findByIdAndUpdate(req.body.id, {
+        //         isApproved: true
+        //     })
+        //     .then(movie => res.status(200).json(movie))
+        //     .catch(error => res.status(500).json({
+        //         error: 'Internal server error',
+        //         message: error.message
+        //     }));
     }
 }

@@ -18,6 +18,7 @@ module.exports = {
             .then((items) => res.status(200).json(items));
     },
     addItem: (req, res) => {
+        console.log(req.body);
         Item
             .create(req.body)
             .then((newItem) => {
