@@ -8,17 +8,17 @@ module.exports = (app, api) => {
     // Update/approve a specific partner
     app.put(`${api}/partner`, 
         middleware.checkAuthentication,
-        middleware.checkAdminRole,    
+        middleware.isAdmin,    
         partnerController.updatePartner);
     
     app.get(`${api}/partners`, 
         middleware.checkAuthentication,
-        middleware.checkAdminRole,
+        middleware.isAdmin,
         partnerController.getAllPartners);
     app.get(`${api}/approved-partners`, partnerController.getApprovedPartners);
     app.delete(`${api}/partner/:id`,
         middleware.checkAuthentication,
-        middleware.checkAdminRole,
+        middleware.isAdmin,
         partnerController.deletePartner
     )
 }

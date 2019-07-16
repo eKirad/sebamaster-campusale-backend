@@ -11,10 +11,10 @@ module.exports = (app, api)  => {
     // Routes that require admin authorization
     app.post(`${api}/signup-partner`, 
         middleware.checkAuthentication,
-        middleware.checkAdminRole,
+        middleware.isAdmin,
         userController.signupPartnerUser);
     app.delete(`${api}/delete-partner`,
         middleware.checkAuthentication,
-        middleware.checkAdminRole,
+        middleware.isAdmin,
         userController.deletePartnerUser)
 }

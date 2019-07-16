@@ -4,7 +4,7 @@ const userService = require('../services/userService');
 module.exports = {
     getWishlist: (req, res) => {
         const user = userService.getUser(req.headers.authorization);
-        if (user.role === "student") {
+
             if (req.query.itemId) {
                 // Checking if a specific item exists in the user's wishlist
                 Wishlist
@@ -20,12 +20,6 @@ module.exports = {
                         res.status(200).json(wishlist);
                     })
             }
-        } else {
-            // Admins and partners don't have wishlists
-            res.status(500).json({
-                error: 'This user doesn\'t have a wishlist'
-            });
-        }
     },
     addItemToWishlist: (req, res) => {
         const user = userService.getUser(req.headers.authorization);
@@ -33,7 +27,7 @@ module.exports = {
             user: user.id,
             item: req.body.itemId,
         };
-        if (user.role === "student") {
+
             Wishlist
                 .create(wishlistItem)
                 .then((newItem) => {
@@ -52,12 +46,6 @@ module.exports = {
                         });
                     }
                 });
-        }
-        else {
-            res.status(400).json({
-                message: 'Admins and partners don\'t have wishlists.'
-            })
-        }
     },
     removeItemFromWishlist: (req, res) => {
         const user = userService.getUser(req.headers.authorization);

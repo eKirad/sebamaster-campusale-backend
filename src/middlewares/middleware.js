@@ -38,7 +38,7 @@ const errorHandler = (err, req, res, next) => {
     res.render('error', { error: err })
 };
 
-const checkAdminRole = (req, res, next) => {
+const isAdmin = (req, res, next) => {
 
     const userObj = userService.getUser(req.headers.authorization);
 
@@ -53,7 +53,7 @@ const checkAdminRole = (req, res, next) => {
     }
 }
 
-const checkPartnerOrAdminRole = (req, res, next) => {
+const isAdminOrPartner = (req, res, next) => {
     const userObj = userService.getUser(req.headers.authorization);
 
     if (userObj.role !== `admin` && userObj.role !== `partner`) {
@@ -67,9 +67,22 @@ const checkPartnerOrAdminRole = (req, res, next) => {
     }
 }
 
+const isStudent = (req, res, next) => {
+    const userObj = userService.getUser(req.headers.authorization);
+
+    if (userObj.role !== `student`) {
+        res.status(400).json({
+            message: 'Admins and partners don\'t have wishlists.'
+        });
+    } else {
+        next();
+    }
+}
+
 module.exports = {
     checkAuthentication,
-    checkAdminRole,
-    checkPartnerOrAdminRole,
+    isAdmin,
+    isAdminOrPartner,
+    isStudent,
     errorHandler
 }
