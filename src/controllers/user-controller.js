@@ -150,5 +150,31 @@ module.exports = {
             .then((user) => {
                 res.status(200).json(user)
             })
+    },
+    updateUser: (req, res) => {
+        if (Object.keys(req.body).length === 0) {
+            return res.status(400).json({
+                error: 'Bad Request',
+                message: 'The request body is empty'
+            });
+        }
+
+        console.log(`Inside updateUser()`);
+        console.log(req.body);
+        console.log(req.body.birthdate)
+        User
+            .findByIdAndUpdate(req.body._id, {
+                password: bcrypt.hashSync(req.body.password, 8),
+                email: req.body.email,
+                role: req.body.role,
+                gender: req.body.gender,
+                location: req.body.location,
+                dateOfBirth: req.body.birthdate
+            })
+            .then(movie => res.status(200).json(movie))
+            .catch(error => res.status(500).json({
+                error: 'Internal server error',
+                message: error.message
+            }));
     }
 }
