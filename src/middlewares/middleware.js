@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
-const userService = require('../services/userService');
+const userService = require('../services/user-service');
 
 const checkAuthentication = (req, res, next) => {
     let token = ``;

@@ -1,5 +1,5 @@
 const Item = require('../models/Item');
-const userService = require('../services/userService');
+const userService = require('../services/user-service');
 
 module.exports = {
     getItem: (req, res) => {
