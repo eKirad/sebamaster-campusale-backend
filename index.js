@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const env = process.env.NODE_ENV || `developement`;
 
 const apiVersion = `v1`;
@@ -11,6 +12,7 @@ const config = require('./src/config/config')[env]
 require('./src/config/database') (config);
 
 const app = express();
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
