@@ -69,8 +69,6 @@ module.exports = {
             });
         }
 
-        console.log(`Inside updatePartner()`);
-        console.log(req.body);
         Partner
             .findByIdAndUpdate(req.body.id, {
                 isApproved: true

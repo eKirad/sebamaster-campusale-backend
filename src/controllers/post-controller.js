@@ -11,7 +11,6 @@ module.exports = {
         if (req.body) {
             post.discount = req.body.discount
         }
-        console.log(post)
         Post
             .create(post)
             .then((bdp) => {

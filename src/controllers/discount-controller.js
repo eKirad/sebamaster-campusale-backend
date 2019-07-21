@@ -65,7 +65,6 @@ module.exports = {
                 message: 'The request body is empty'
             });
         }
-        console.log(req.body)
         Discount
             .findByIdAndUpdate(req.body.id, {
                 name: req.body.name,
@@ -73,8 +72,6 @@ module.exports = {
                 bulkAmount: req.body.bulkAmount
             }, {new: true})
             .then(discount => {
-                console.log("burdayım")
-                console.log(discount)
                 res.status(200).json(discount)
             })
             .catch(error => res.status(500).json({

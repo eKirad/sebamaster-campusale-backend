@@ -20,8 +20,6 @@ module.exports = {
             .then((items) => res.status(200).json(items));
     },
     addItem: (req, res) => {
-        console.log(req.body)
-        console.log(req.file)
         let item = req.body;
         item.imagePath = req.file.filename;
         Item
