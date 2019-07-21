@@ -34,14 +34,8 @@ module.exports = {
     getPosts: (req, res) => {
         const currUser = userService.getUser(req.headers.authorization);
         Post
-            .find().populate(`users`).populate('discount')
+            .find().populate('discount')
             .then((discounts) => {
-                for (let i=0;i<discounts.length;i++){
-                    if (discounts[i].users.includes(currUser.id))
-                    {
-                        discounts[i].joined = true;
-                    }
-                }
                 return res.status(200).json((discounts));
             })
             .catch((error) => {
