@@ -166,7 +166,7 @@ module.exports = {
                 role: req.body.role,
                 gender: req.body.gender,
                 location: req.body.location,
-                dateOfBirth: req.body.birthdate
+                dateOfBirth: req.body.dateOfBirth
             })
             .then(user => res.status(200).json(user))
             .catch(error => res.status(500).json({

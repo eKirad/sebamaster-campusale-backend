@@ -3,6 +3,8 @@ const router = express.Router();
 const itemController = require('../controllers/item-controller');
 const middleware = require('../middlewares/middleware');
 
+var multer  = require('multer')
+var upload = multer({ dest: '/public/uploads' })
 
 module.exports = (app, api) => {
     app.get(`${api}/items`, itemController.getAllItems);
@@ -17,6 +19,7 @@ module.exports = (app, api) => {
     app.post(`${api}/items`, 
         middleware.checkAuthentication, 
         middleware.isAdminOrPartner,
+        upload.single('image'),
         itemController.addItem);
     
     // Currently unused

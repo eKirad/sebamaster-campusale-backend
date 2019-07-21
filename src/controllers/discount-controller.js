@@ -22,13 +22,24 @@ module.exports = {
                 }
             });
     },
-        getDiscounts: (req, res) => {
+    getDiscounts: (req, res) => {
         const partnerId = userService
             .getUser(req.headers.authorization)
             .partnerId;
-        
+
         Discount
             .find({partnerId: partnerId})
+            .then((discounts) => {
+                return res.status(200).json((discounts));
+            })
+            .catch((error) => {
+
+            });
+    },
+    getBulkDiscounts: (req, res) => {
+
+        Discount
+            .find({bulkAmount: {$ne: null}})
             .then((discounts) => {
                 return res.status(200).json((discounts));
             })
@@ -54,17 +65,21 @@ module.exports = {
                 message: 'The request body is empty'
             });
         }
-
         console.log(req.body)
-
-        // Discount
-        //     .findByIdAndUpdate(req.body.id, {
-        //         isApproved: true
-        //     })
-        //     .then(movie => res.status(200).json(movie))
-        //     .catch(error => res.status(500).json({
-        //         error: 'Internal server error',
-        //         message: error.message
-        //     }));
+        Discount
+            .findByIdAndUpdate(req.body.id, {
+                name: req.body.name,
+                amountInPercentage: req.body.amountInPercentage,
+                bulkAmount: req.body.bulkAmount
+            }, {new: true})
+            .then(discount => {
+                console.log("burdayım")
+                console.log(discount)
+                res.status(200).json(discount)
+            })
+            .catch(error => res.status(500).json({
+                error: 'Internal server error',
+                message: error.message
+            }));
     }
 }

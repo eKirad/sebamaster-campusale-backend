@@ -7,7 +7,7 @@ const itemSchema = new mongoose.Schema({
     price: {type: Number, required: true},
     discount: {type: mongoose.Schema.Types.ObjectId, ref: 'Discount'},
     uri: {type: String}, // has to be made required: true
-    // image: {},
+    imagePath: {type: String},
     description: {type :String}
 });
 

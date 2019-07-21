@@ -1,6 +1,8 @@
 const Item = require('../models/Item');
 const userService = require('../services/user-service');
 
+
+
 module.exports = {
     getItem: (req, res) => {
         const itemId = req.params.id;
@@ -18,11 +20,11 @@ module.exports = {
             .then((items) => res.status(200).json(items));
     },
     addItem: (req, res) => {
-        console.log(req.body);
+        console.log(req.body)
+        console.log(req.file)
         Item
             .create(req.body)
             .then((newItem) => {
-                console.log(newItem)
                 return res.status(200).json(newItem)})
             .catch((error) => {
                 if (error.code === 11000) {
@@ -48,11 +50,6 @@ module.exports = {
             .then((items) => res.status(200).json(items))
     },
     updateItem: (req, res) => {
-        console.log(`Inside updateItem`);
-        // console.log(req.body)
-        console.log(req.body.itemId)
-        console.log(req.body.discountId)
-        
         if (Object.keys(req.body).length === 0) {
             return res.status(400).json({
                 error: 'Bad Request',
