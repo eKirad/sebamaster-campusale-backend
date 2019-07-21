@@ -1,6 +1,6 @@
 const Item = require('../models/Item');
 const userService = require('../services/user-service');
-
+const fs = require('fs');
 
 
 module.exports = {
@@ -22,6 +22,8 @@ module.exports = {
     addItem: (req, res) => {
         console.log(req.body)
         console.log(req.file)
+        let item = req.body;
+        item.imagePath = req.file.filename;
         Item
             .create(req.body)
             .then((newItem) => {
@@ -40,6 +42,13 @@ module.exports = {
                 }
             });
     },
+    getItemImage: (req, res) => {
+        fs.readFile('public/uploads/'+req.params.filename, (err,contents)=> {
+            res.writeHead(200, {'Content-Type': 'image/png' });
+            res.end(contents, 'binary');
+        });
+    },
+
     getPartnerItems: (req, res) => {
         const partnerId = userService
             .getUser(req.headers.authorization)
