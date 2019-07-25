@@ -56,7 +56,7 @@ module.exports = {
     joinPost: (req, res) => {
         const currUser = userService.getUser(req.headers.authorization);
         Post
-            .findByIdAndUpdate(req.body.id, {$addToSet: {users: currUser._id}})
+            .findByIdAndUpdate(req.body.id, {$addToSet: {users: currUser.id}})
             .then(bdp => res.status(200).json(bdp))
             .catch(error => res.status(500).json({
                 error: 'Internal server error',
@@ -66,7 +66,7 @@ module.exports = {
     leavePost: (req, res) => {
         const currUser = userService.getUser(req.headers.authorization);
         Post
-            .findByIdAndUpdate(req.body.id, {$pull: {users: currUser._id }})
+            .findByIdAndUpdate(req.body.id, {$pull: {users: currUser.id }})
             .then(bdp => res.status(200).json(bdp))
             .catch(error => res.status(500).json({
                 error: 'Internal server error',
